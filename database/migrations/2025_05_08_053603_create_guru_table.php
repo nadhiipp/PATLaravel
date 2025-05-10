@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nip')->unique();
             $table->string('email');
             $table->string('no_telp');
+            
             $table->string('jenis_kelamin');
             $table->date('tgl_lahir');
             $table->unsignedBigInteger('id_user');
