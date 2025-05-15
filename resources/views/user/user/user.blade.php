@@ -8,21 +8,21 @@
         <div class="card-header bg-white py-3">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h5 class="mb-0 fw-bold text-danger">Data Siswa</h5>
-                    <p class="text-muted small mb-0">Kelola data siswa dalam sistem</p>
+                    <h5 class="mb-0 fw-bold text-danger">Data User</h5>
+                    <p class="text-muted small mb-0">Kelola data User dalam sistem</p>
                 </div>
                 <div class="col-md-6 text-md-end mt-3 mt-md-0">
                     <a href="#" class="btn btn-success btn-sm me-2" data-bs-toggle="modal" data-bs-target="#exportModal">
                         <i class="fas fa-file-export me-1"></i> Export
                     </a>
-                    <a href="{{ route('murid.create') }}" class="btn btn-primary btn-sm" >
-                        <i class="fas fa-plus me-1"></i> Tambah Siswa
+                    <a href="{{ route('user.create') }}" class="btn btn-primary btn-sm" >
+                        <i class="fas fa-plus me-1"></i> Tambah user
                     </a>
                 </div>
             </div>
         </div>
         
-        <form action="{{ route('murid.index') }}" method="GET" class="mb-3">
+        <form action="{{ route('user.index') }}" method="GET" class="mb-3">
             @csrf
             <div class="card-header bg-light input-group">
                 <h5 class="mb-0">Filter Data</h5>
@@ -34,7 +34,7 @@
                         <span class="input-group-text bg-light border-end-0">
                             <i class="fas fa-search text-muted"></i>
                         </span>
-                        <input type="text" name="search" id="search" value="{{ request('search') }}" class="form-control border-start-0 ps-0" placeholder="Cari siswa..." aria-label="Search">
+                        <input type="text" name="search" id="search" value="{{ request('search') }}" class="form-control border-start-0 ps-0" placeholder="Cari user..." aria-label="Search">
                     </div>
                 </div>
         </form>
@@ -52,38 +52,35 @@
                         <tr>
                             <th class="text-center" style="width: 5%;">NO</th>
                           
-                            <th style="width: 10%;">NIS</th>
-                            <th style="width: 18%;">Nama</th>
-                            <th style="width: 10%;">Kelas</th>
-                            <th style="width: 12%;">Jenis Kelamin</th>
-                            <th style="width: 12%;">Tanggal Lahir</th>
-                            <th style="width: 15%;">Nomor Telepon</th>
+                            <th style="width: 10%;">NIP / NIS</th>
+                            <th style="width: 9%;">Role</th>
                             <th class="text-center" style="width: 10%;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($murid as $nadhip)
+                        @foreach ($user as $nadhip)
                         <tr>
                             <td class="text-center">{{ $nadhip->id}}</td>
 
                             {{-- {{ $nadhip->firstItem() + $loop->index }} --}}
                        
-                            <td>{{ $nadhip->nis }}</td>
-                            <td>{{ $nadhip->nama }}</td>
-                            <td>{{ $nadhip->kelas }}</td>
+                            <td>{{ $nadhip->username }}</td>
                             <td>
-                                @if($nadhip->jenis_kelamin == 'L')
-                                    <span class="badge bg-primary">Laki-laki</span>
+                            
+                                @if($nadhip->role == 'admin')
+                                    <span class="badge bg-primary">Admin</span>
+                                @elseif($nadhip->role == 'guru')
+                                    <span class="badge bg-success">Guru</span>
+                                @elseif($nadhip->role == 'murid')
+                                    <span class="badge bg-secondary">Murid</span>   
                                 @else
-                                    <span class="badge bg-info">Perempuan</span>
+                                    <span class="badge bg-danger">Unknown</span>
                                 @endif
                             </td>
-                            <td>{{ \Carbon\Carbon::parse($nadhip->tgl_lahir)->format('d M Y') }}</td>
-                            <td>{{ $nadhip->no_telp }}</td>
 
                             <td class="text-center">
                                 <div class="btn-group" role="group">
-                                    <a href="{{ route('murid.edit', $nadhip->id) }}" class="btn btn-sm btn-warning">
+                                    <a href="{{ route('user.edit', $nadhip->id) }}" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
 
@@ -99,12 +96,10 @@
             </div>
             
             <div class="row mt-3">
-                <div class="col-md-6 small text-muted">
-                    
+                <div class="col-md-12 small text-muted">
+                   {{ $user->links() }}  
                 </div>
-                {{ $murid->links() }}   
-            </div>
-        </div>
+
     </div>
 </div>
 
@@ -144,6 +139,7 @@
 
 
 <!-- Delete Modal -->
+
 <div class="modal fade" id="deleteSiswaModal{{ $nadhip->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -162,7 +158,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <form id="formHapus" action="{{ route('murid.destroy', $nadhip->id)}}" method="POST" class="d-inline">
+                <form id="formHapus" action="{{ route('user.destroy', $nadhip->id)}}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Hapus</button>
@@ -171,8 +167,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 @push('scripts')

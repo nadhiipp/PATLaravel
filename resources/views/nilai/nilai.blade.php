@@ -8,21 +8,21 @@
         <div class="card-header bg-white py-3">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h5 class="mb-0 fw-bold text-danger">Data Siswa</h5>
+                    <h5 class="mb-0 fw-bold text-danger">Data Nilai Siswa</h5>
                     <p class="text-muted small mb-0">Kelola data siswa dalam sistem</p>
                 </div>
                 <div class="col-md-6 text-md-end mt-3 mt-md-0">
                     <a href="#" class="btn btn-success btn-sm me-2" data-bs-toggle="modal" data-bs-target="#exportModal">
                         <i class="fas fa-file-export me-1"></i> Export
                     </a>
-                    <a href="{{ route('murid.create') }}" class="btn btn-primary btn-sm" >
+                    <a href="" class="btn btn-primary btn-sm" >
                         <i class="fas fa-plus me-1"></i> Tambah Siswa
                     </a>
                 </div>
             </div>
         </div>
         
-        <form action="{{ route('murid.index') }}" method="GET" class="mb-3">
+        <form action="{{ route('nilai.index') }}" method="GET" class="mb-3">
             @csrf
             <div class="card-header bg-light input-group">
                 <h5 class="mb-0">Filter Data</h5>
@@ -50,36 +50,31 @@
                 <table class="table table-hover table-bordered align-middle" id="siswaTable">
                     <thead class="table-light">
                         <tr>
-                            <th class="text-center" style="width: 5%;">NO</th>
+                            <th class="text-center" style="width: 2%;">NO</th>
                           
-                            <th style="width: 10%;">NIS</th>
-                            <th style="width: 18%;">Nama</th>
-                            <th style="width: 10%;">Kelas</th>
-                            <th style="width: 12%;">Jenis Kelamin</th>
-                            <th style="width: 12%;">Tanggal Lahir</th>
-                            <th style="width: 15%;">Nomor Telepon</th>
-                            <th class="text-center" style="width: 10%;">Aksi</th>
+                            <th style="width: 3%;">Nama Siswa</th>
+                            <th style="width: 5%; ">Mata Pelajaran</th>
+                            <th style="width: 5%; ">Nilai</th>
+                            <th style="width: 3%; ">Predikat</th>
+                            <th style="width: 11%; ">Guru</th>
+                            <th style="width: 5%; ">Semester</th>
+                            <th class="text-center" style="width: 5%;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($murid as $nadhip)
+                        @foreach ($nilai as $nadhip)
                         <tr>
                             <td class="text-center">{{ $nadhip->id}}</td>
 
                             {{-- {{ $nadhip->firstItem() + $loop->index }} --}}
                        
-                            <td>{{ $nadhip->nis }}</td>
-                            <td>{{ $nadhip->nama }}</td>
-                            <td>{{ $nadhip->kelas }}</td>
-                            <td>
-                                @if($nadhip->jenis_kelamin == 'L')
-                                    <span class="badge bg-primary">Laki-laki</span>
-                                @else
-                                    <span class="badge bg-info">Perempuan</span>
-                                @endif
-                            </td>
-                            <td>{{ \Carbon\Carbon::parse($nadhip->tgl_lahir)->format('d M Y') }}</td>
-                            <td>{{ $nadhip->no_telp }}</td>
+                            <td>{{ $nadhip->murid->nama}}</td>
+                            <td>{{ $nadhip->matapelajaran->mata_pelajaran}}</td>
+                            <td>{{ $nadhip->nilai }}</td>
+                            <td>{{ $nadhip->predikat }}</td>
+                            <td>{{ $nadhip->guru->nama }}</td>
+                            <td>Semester {{ $nadhip->semester }}</td>
+                            
 
                             <td class="text-center">
                                 <div class="btn-group" role="group">
@@ -99,10 +94,9 @@
             </div>
             
             <div class="row mt-3">
-                <div class="col-md-6 small text-muted">
-                    
-                </div>
-                {{ $murid->links() }}   
+                <div class="col-md-12 small text-muted">
+                   {{ $nilai->links() }}  
+                       
             </div>
         </div>
     </div>
@@ -171,8 +165,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 @push('scripts')

@@ -10,18 +10,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-bell me-2"></i>
-                            <span class="badge rounded-pill bg-danger">3</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">5 penilaian baru</a></li>
-                            <li><a class="dropdown-item" href="#">2 dokumen menunggu review</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Lihat semua notifikasi</a></li>
-                        </ul>
-                    </li>
+                    
+                        
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                             <i class="fas fa-user-circle me-2"></i>Admin
@@ -30,7 +20,7 @@
                             <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profil</a></li>
                             <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Pengaturan</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Keluar</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/') }}"><i class="fas fa-sign-out-alt me-2"></i>Keluar</a></li>
                         </ul>
                     </li>
                 </ul>

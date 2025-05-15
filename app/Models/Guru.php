@@ -23,6 +23,7 @@ class Guru extends Model
     public function mataPelajaran()
     {
         return $this->belongsTo(MataPelajaran::class, 'id_mata_pelajaran');
+        
     }
 
     public function nilai()
